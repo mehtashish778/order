@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="C:/Users/mehta/order/database/order.db" readonly="0" foreign_keys="1" case_sensitive_like="0" temp_store="0" wal_autocheckpoint="1000" synchronous="2"/><attached/><window><main_tabs open="structure browser pragmas query" current="0"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="125"/><column_width id="3" width="2555"/><column_width id="4" width="0"/><expanded_item id="0" parent="1"/><expanded_item id="0" parent="0"/><expanded_item id="1" parent="0"/><expanded_item id="2" parent="0"/><expanded_item id="3" parent="0"/><expanded_item id="1" parent="1"/><expanded_item id="2" parent="1"/><expanded_item id="3" parent="1"/></tab_structure><tab_browse><current_table name="4,4:mainCart"/><default_encoding codec=""/><browse_table_settings/></tab_browse><tab_sql><sql name="SQL 1">CREATE TABLE Product (
+    product_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    product_name TEXT NOT NULL,
+    product_description TEXT,
+    price REAL NOT NULL,
+    type TEXT CHECK(type IN ('veg', 'non-veg')) NOT NULL,
+    stock_quantity INTEGER NOT NULL
+);
+
+
+CREATE TABLE Combo (
+    combo_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    combo_name TEXT NOT NULL,
+    final_discounted_price REAL NOT NULL
+);
+
+CREATE TABLE ComboProducts (
+    combo_id INTEGER,
+    product_id INTEGER,
+    PRIMARY KEY (combo_id, product_id),
+    FOREIGN KEY (combo_id) REFERENCES Combo(combo_id) ON DELETE CASCADE,
+    FOREIGN KEY (product_id) REFERENCES Product(product_id) ON DELETE CASCADE
+);
+
+
+CREATE TABLE Cart (
+    cart_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    product_id INTEGER,
+    combo_id INTEGER,
+    quantity INTEGER NOT NULL,
+    item_type TEXT CHECK(item_type IN ('product', 'combo')) NOT NULL,
+    FOREIGN KEY (product_id) REFERENCES Product(product_id),
+    FOREIGN KEY (combo_id) REFERENCES Combo(combo_id)
+);</sql><current_tab id="0"/></tab_sql></sqlb_project>
